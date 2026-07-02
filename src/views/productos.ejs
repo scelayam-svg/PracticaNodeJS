@@ -1,31 +1,45 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/productos.css">
-        <title>Sistema de Productos</title>
+        <title>Document</title>
     </head>
     <body>
         <h1>Sistema de Productos</h1>
+
+        <div class="acciones-superiores">
+            <a href="/productos/nuevo" class="btn btn-crear">Crear producto nuevo</a>
+        </div>
+
         <h2>Lista de Productos</h2>
 
-        <table border="1">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Precio</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <% productos.forEach(producto => { %>
+                <% productos.forEach(producto =>{ %>
                     <tr>
                         <td><%= producto.id %></td>
                         <td><%= producto.nombre %></td>
-                        <td>₡<%= producto.precio.toLocaleString("es-CR") %></td>
+                        <td>₡<%= producto.precio %></td>
+                        <td class="acciones">
+                            <a href="/productos/editar/<%= producto.id %>" class="btn btn-editar">
+                                Editar
+                            </a>
+                            <form action="/productos/eliminar/<%= producto.id %>" method="post" class="form-eliminar">
+                                <button type="submit" class="btn btn-eliminar">Eliminar</button>
+                            </form>
+                        </td>
                     </tr>
-                <% }); %>
+                <% }) %>
             </tbody>
         </table>
     </body>

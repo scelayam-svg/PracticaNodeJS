@@ -8,9 +8,9 @@
     </head>
     <body>
         <main class="container">
-            <h1>Crear Producto Nuevo</h1>
+            <h1>Editar Producto</h1>
 
-            <form action="/productos" method="post" class="formulario">
+            <form action="/productos/editar/<%= producto.id %>" method="post" class="formulario">
                 <label for="nombre">
                     Nombre del producto
                 </label>
@@ -18,7 +18,7 @@
                     type="text"
                     id="nombre"
                     name="nombre"
-                    placeholder="Ejemplo:Monitor"
+                    value="<%= producto.nombre %>"
                     required
                 >
                 <label for="precio">
@@ -28,11 +28,11 @@
                     type="number"
                     id="precio"
                     name="precio"
-                    placeholder="Ejemplo:85000"
+                    value="<%= producto.precio %>"
                     required
                 >
                 <div class="acciones-formulario">
-                    <button type="submit" class="btn btn-crear">Guardar Producto</button>
+                    <button type="submit" class="btn btn-editar">Actualizar Producto</button>
                     <a href="/" class="btn btn-cancelar">Cancelar</a>
                 </div>
             </form>

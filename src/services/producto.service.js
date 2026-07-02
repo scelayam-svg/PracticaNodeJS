@@ -9,17 +9,12 @@ let productos=[
     {
         id:2,
         nombre:"Teclado",
-        precio:12000
+        precio:10000
     },
     {
         id:3,
-        nombre:"Monitor",
-        precio:85000
-    },
-    {
-        id:4,
-        nombre:"Headset",
-        precio:15000
+        nombre:"Cables USB",
+        precio:1500
     }
 ];
 
@@ -30,20 +25,34 @@ export function obtenerProductos(){
 
 //Agregar un nuevo producto
 export function agregarProducto(nombre, precio){
-    //Crear el nuevo objeto
-    /*
-    {
-        id:1,
-        nombre:"Mouse",
-        precio:5000
-    }
-    */
     const nuevoProducto = {
         id:productos.length+1,
         nombre,
         precio:Number(precio)
     }
-
-    //Guardamos el producto nuevo en el arreglo
     productos.push(nuevoProducto);
+}
+
+//Buscar un producto por id
+export function obtenerProductoPorId(id){
+    const idNumerico=Number(id);
+    return productos.find(producto=>producto.id===idNumerico);
+}
+
+//Actualizar un producto existente
+export function actulizarProducto(id,nombre,precio){
+    const idNumerico=Number(id);
+    const producto= productos.find(producto=>producto.id===idNumerico);
+    if(!producto){
+        return false
+    }
+    producto.nombre=nombre;
+    producto.precio=Number(precio);
+    return true;
+}
+
+//Eliminar producto
+export function eliminarProducto(id){
+    const idNumerico=Number(id);
+    productos=productos.filter(producto=>producto.id!==idNumerico);
 }
