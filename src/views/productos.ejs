@@ -9,6 +9,16 @@
     <body>
         <h1>Sistema de Productos</h1>
 
+        <% if(mensaje === "creado"){ %>
+            <div class="notificacion exito">✅ Producto creado exitosamente</div>
+        <% } else if(mensaje === "editado"){ %>
+            <div class="notificacion exito">✅ Producto actualizado exitosamente</div>
+        <% } else if(mensaje === "eliminado"){ %>
+            <div class="notificacion exito">✅ Producto eliminado exitosamente</div>
+        <% } else if(mensaje === "error"){ %>
+            <div class="notificacion error">❌ Ocurrió un error al procesar la solicitud</div>
+        <% } %>
+
         <div class="acciones-superiores">
             <a href="/productos/nuevo" class="btn btn-crear">Crear producto nuevo</a>
         </div>

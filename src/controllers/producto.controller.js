@@ -14,7 +14,8 @@ from "../services/producto.service.js"
 //-----------------------------------------------------------------
 export function mostrarProductos(req,res){
     const productos=obtenerProductos();
-    res.render("productos",{productos: productos });
+    const mensaje = req.query.mensaje || null;
+    res.render("productos",{ productos, mensaje });
 }
 
 //Mostrar el formulario de creación
@@ -26,9 +27,9 @@ export function mostrarFormularioCrear(req,res){
 //Guardar producto nuevo
 //------------------------------------------------
 export function guardarProducto(req,res){
-    const {nombre, precio} = req.body
+    const {nombre, precio} = req.body;
     agregarProducto(nombre,precio);
-    res.redirect("/");
+    res.redirect("/?mensaje=creado");
 }
 
 //Mostrar formulario de edición 
@@ -39,9 +40,7 @@ export function mostrarFormularioEditar(req,res){
     if(!producto){
         return res.send("Producto no encontrado");
     }
-    res.render("editar-producto",{
-        producto:producto
-    });
+    res.render("editar-producto",{ producto });
 }
 
 //Actualizar Producto
@@ -49,8 +48,12 @@ export function mostrarFormularioEditar(req,res){
 export function guardarActualizacionProducto(req,res){
     const { id } = req.params;
     const { nombre, precio }= req.body;
-    actulizarProducto(id,nombre,precio);
-    res.redirect("/")
+    const exito = actulizarProducto(id,nombre,precio);
+    if(exito){
+        res.redirect("/?mensaje=editado");
+    } else {
+        res.redirect("/?mensaje=error");
+    }
 }
 
 //Eliminar producto
@@ -58,5 +61,5 @@ export function guardarActualizacionProducto(req,res){
 export function borrarProducto(req,res){
     const { id }=req.params;
     eliminarProducto(id);
-    res.redirect("/");
+    res.redirect("/?mensaje=eliminado");
 }

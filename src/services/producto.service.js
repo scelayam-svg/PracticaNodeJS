@@ -18,6 +18,8 @@ let productos=[
     }
 ];
 
+let nextId = 4;
+
 //Devuelva todos los productos
 export function obtenerProductos(){
     return productos;
@@ -26,10 +28,11 @@ export function obtenerProductos(){
 //Agregar un nuevo producto
 export function agregarProducto(nombre, precio){
     const nuevoProducto = {
-        id:productos.length+1,
+        id: nextId,
         nombre,
         precio:Number(precio)
     }
+    nextId++;
     productos.push(nuevoProducto);
 }
 
