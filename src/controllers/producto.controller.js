@@ -10,15 +10,18 @@ import {
 }
 from "../services/producto.service.js"
 
-//Mostrar los productos en la p√°gina principal
+//Mostrar los productos en la p·gina principal
 //-----------------------------------------------------------------
-export function mostrarProductos(req,res){
-    const productos=obtenerProductos();
-    const mensaje = req.query.mensaje || null;
-    res.render("productos",{ productos, mensaje });
+export async function mostrarProductos(req,res){
+    try {
+        const productos=await obtenerProductos();
+        res.render("productos",{productos: productos });
+    } catch (error) {
+        res.send("Error al mostrar productos")
+    }
 }
 
-//Mostrar el formulario de creaci√≥n
+//Mostrar el formulario de creaciÛn
 //-----------------------------------------------
 export function mostrarFormularioCrear(req,res){
     res.render("crear-productos");
@@ -26,40 +29,54 @@ export function mostrarFormularioCrear(req,res){
 
 //Guardar producto nuevo
 //------------------------------------------------
-export function guardarProducto(req,res){
-    const {nombre, precio} = req.body;
-    agregarProducto(nombre,precio);
-    res.redirect("/?mensaje=creado");
+export async function guardarProducto(req,res){
+    try {
+        const {nombre, precio} = req.body
+        await agregarProducto(nombre,precio);
+        res.redirect("/");
+    } catch (error) {
+        res.send("Error al guardar producto")
+    }
 }
 
-//Mostrar formulario de edici√≥n 
+//Mostrar formulario de ediciÛn 
 //-------------------------------------
-export function mostrarFormularioEditar(req,res){
-    const { id }= req.params;
-    const producto = obtenerProductoPorId(id);
-    if(!producto){
-        return res.send("Producto no encontrado");
+export async function mostrarFormularioEditar(req,res){
+    try {
+        const { id }= req.params;
+        const producto =await obtenerProductoPorId(id);
+        if(!producto){
+            return res.send("Producto no encontrado");
+        }
+        res.render("editar-producto",{
+            producto:producto
+        });
+    } catch (error) {
+        res.send("Error al buscar producto")
     }
-    res.render("editar-producto",{ producto });
 }
 
 //Actualizar Producto
 //---------------------------------------------
-export function guardarActualizacionProducto(req,res){
-    const { id } = req.params;
-    const { nombre, precio }= req.body;
-    const exito = actulizarProducto(id,nombre,precio);
-    if(exito){
-        res.redirect("/?mensaje=editado");
-    } else {
-        res.redirect("/?mensaje=error");
+export async function guardarActualizacionProducto(req,res){
+    try {
+        const { id } = req.params;
+        const { nombre, precio }= req.body;
+        await actulizarProducto(id,nombre,precio);
+        res.redirect("/")
+    } catch (error) {
+        res.send("Error al actualizar producto");
     }
 }
 
 //Eliminar producto
 //---------------------------------------------
-export function borrarProducto(req,res){
-    const { id }=req.params;
-    eliminarProducto(id);
-    res.redirect("/?mensaje=eliminado");
+export async function borrarProducto(req,res){
+    try {
+        const { id }=req.params;
+        await eliminarProducto(id);
+        res.redirect("/");
+    } catch (error) {
+        res.send("Error al eliminar producto")
+    }
 }

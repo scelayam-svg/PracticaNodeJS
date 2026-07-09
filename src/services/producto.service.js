@@ -1,61 +1,34 @@
-//Simulacion de la base
-
-let productos=[
-    {
-        id:1,
-        nombre:"Mouse",
-        precio:5000
-    },
-    {
-        id:2,
-        nombre:"Teclado",
-        precio:10000
-    },
-    {
-        id:3,
-        nombre:"Cables USB",
-        precio:1500
-    }
-];
-
-let nextId = 4;
+//Llamamos a la base de datos
+import Producto from "../models/producto.model.js";
 
 //Devuelva todos los productos
-export function obtenerProductos(){
-    return productos;
+export async function obtenerProductos(){
+    return await Producto.find().sort({createdAt:-1});
 }
 
 //Agregar un nuevo producto
-export function agregarProducto(nombre, precio){
-    const nuevoProducto = {
-        id: nextId,
-        nombre,
+export async function agregarProducto(nombre, precio){
+    const nuevoProducto = new Producto({
+        nombre:nombre,
         precio:Number(precio)
-    }
-    nextId++;
-    productos.push(nuevoProducto);
+    });
+    return await nuevoProducto.save();
 }
 
 //Buscar un producto por id
-export function obtenerProductoPorId(id){
-    const idNumerico=Number(id);
-    return productos.find(producto=>producto.id===idNumerico);
+export async function obtenerProductoPorId(id){
+    return await Producto.findById(id);
 }
 
 //Actualizar un producto existente
-export function actulizarProducto(id,nombre,precio){
-    const idNumerico=Number(id);
-    const producto= productos.find(producto=>producto.id===idNumerico);
-    if(!producto){
-        return false
-    }
-    producto.nombre=nombre;
-    producto.precio=Number(precio);
-    return true;
+export async function actulizarProducto(id,nombre,precio){
+    return await Producto.findByIdAndUpdate(id,{
+        nombre:nombre,
+        precio:Number(precio)
+    }, {new:true});
 }
 
 //Eliminar producto
-export function eliminarProducto(id){
-    const idNumerico=Number(id);
-    productos=productos.filter(producto=>producto.id!==idNumerico);
+export async function eliminarProducto(id){
+    return await Producto.findByIdAndDelete(id);
 }

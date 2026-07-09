@@ -2,7 +2,7 @@
   "name": "practicanodejs",
   "version": "1.0.0",
   "main": "server.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js"
   },
@@ -13,7 +13,8 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.7.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
