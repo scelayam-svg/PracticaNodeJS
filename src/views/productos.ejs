@@ -9,6 +9,16 @@
     <body>
         <h1>Sistema de Productos</h1>
 
+        <% if(mensaje === "creado"){ %>
+            <div class="notificacion exito">Producto creado exitosamente</div>
+        <% } else if(mensaje === "editado"){ %>
+            <div class="notificacion exito">Producto actualizado exitosamente</div>
+        <% } else if(mensaje === "eliminado"){ %>
+            <div class="notificacion exito">Producto eliminado exitosamente</div>
+        <% } else if(mensaje === "error"){ %>
+            <div class="notificacion error">Ocurrio un error al procesar la solicitud</div>
+        <% } %>
+
         <div class="acciones-superiores">
             <a href="/productos/nuevo" class="btn btn-crear">Crear producto nuevo</a>
         </div>
@@ -29,7 +39,7 @@
                     <tr>
                         <td><%= producto.id %></td>
                         <td><%= producto.nombre %></td>
-                        <td>â‚¡<%= producto.precio %></td>
+                        <td>¢<%= producto.precio %></td>
                         <td class="acciones">
                             <a href="/productos/editar/<%= producto.id %>" class="btn btn-editar">
                                 Editar
