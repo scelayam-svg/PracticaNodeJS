@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/autenticacion.css">
+    <title>Iniciar sesión</title>
+</head>
+<body>
+    <main class="auth-container">
+        <section class="auth-card">
+            <h1>Iniciar sesión</h1>
+            <p class="descripcion">Ingresá tus credenciales para continuar</p>
+
+            <% if (error) { %>
+                <div class="mensaje-error"><%= error %></div>
+            <% } %>
+
+            <form action="/login" method="post" class="auth-form">
+                <label for="correo">Correo electrónico</label>
+                <input 
+                    type="email"
+                    name="correo"
+                    id="correo"
+                    value="<%= datos.correo || '' %>"
+                    required
+                >
+                <label for="password">Contraseña</label>
+                <input 
+                    type="password"
+                    name="password"
+                    id="password"
+                    minlength="8"
+                    required
+                >
+                <button type="submit">Iniciar sesión</button>
+            </form>
+
+            <p class="enlace-secundario">
+                ¿No tenés cuenta? 
+                <a href="/registro">Registrate</a>
+            </p>
+        </section>
+    </main>
+</body>
+</html>
